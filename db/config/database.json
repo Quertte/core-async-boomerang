@@ -1,7 +1,7 @@
 {
   "development": {
-    "username": "andrew",
-    "password": "postgres",
+    "username": "postgres",
+    "password": "1",
     "database": "game_bumerang",
     "host": "127.0.0.1",
     "dialect": "postgres"
