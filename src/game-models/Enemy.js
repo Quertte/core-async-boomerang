@@ -1,4 +1,5 @@
 // Враг.
+// const Hero = require('./Hero');
 
 class Enemy {
   constructor() {
@@ -7,7 +8,20 @@ class Enemy {
   }
 
   generateSkin() {
-    const skins = ['👾', '💀', '👹', '👻', '👽', '👿', '💩', '🤡', '🤺', '🧛', '🧟', '🎃'];
+    const skins = [
+      '👾',
+      '💀',
+      '👹',
+      '👻',
+      '👽',
+      '👿',
+      '💩',
+      '🤡',
+      '🤺',
+      '🧛',
+      '🧟',
+      '🎃',
+    ];
     this.skin = skins[Math.floor(Math.random() * skins.length)];
   }
 
@@ -18,6 +32,7 @@ class Enemy {
 
   die() {
     this.position = '?';
+    // this.hero.score += 10;
     console.log('Enemy is dead!');
   }
 }
