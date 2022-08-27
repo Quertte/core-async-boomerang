@@ -7,7 +7,7 @@ const Enemy = require('./game-models/Enemy');
 const Boomerang = require('./game-models/Boomerang');
 // const Boomerang = require('./game-models/Boomerang');
 const View = require('./View');
-const changeDB = require('./writePlayerToDB');
+const changeBD = require('./writePlayerToBD');
 // const checkForPlayersAndScore = require('./checkForPlayerAndScore');
 
 // Основной класс игры.
@@ -29,7 +29,7 @@ class Game {
   async generateName() {
     const playerName = await this.view.readName();
     this.hero.heroName = playerName;
-    await changeDB(this.hero.heroName);
+    await changeBD(this.hero.heroName);
   }
 
   regenerateTrack() {
