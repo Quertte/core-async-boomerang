@@ -24,8 +24,10 @@ class Game {
     this.enemy = new Enemy();
     this.track = [];
     this.regenerateTrack();
+    // this.score = 0;
   }
   // проверяет на существование игрока, если его нет - записывает, если он есть - меняет его результат
+
   async generateName() {
     const playerName = await this.view.readName();
     this.hero.heroName = playerName;
@@ -37,6 +39,7 @@ class Game {
     // в единую структуру данных
     this.track = new Array(this.trackLength).fill(' ');
     this.track[this.hero.position] = this.hero.skin;
+    // this.score += 10;
   }
 
   async check() {
