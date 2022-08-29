@@ -5,31 +5,20 @@
 const Hero = require('./game-models/Hero');
 const Enemy = require('./game-models/Enemy');
 const Boomerang = require('./game-models/Boomerang');
-
-// const Boomerang = require('./game-models/Boomerang');
 const View = require('./View');
+const { runInteractiveConsole } = require('./keyboard');
 const changeBD = require('./writePlayerToBD');
-// const checkForPlayersAndScore = require('./checkForPlayerAndScore');
 // Основной класс игры.
 // Тут будут все настройки, проверки, запуск.
 
 class Game {
-    this.view = new View();
-    this.hero = new Hero({
-      position: 0,
-      boomerang: new Boomerang(),
-    }); // Герою можно аргументом передать бумеранг.
+  constructor({ trackLength }) {
+    this.trackLength = trackLength;
+    this.hero = new Hero({ position: 0, boomerang: new Boomerang(), score: 0 }); // Герою можно аргументом передать бумеранг.
     this.enemy = new Enemy();
+    this.view = new View();
     this.track = [];
     this.regenerateTrack();
-    // this.score = 0;
-  }
-  // проверяет на существование игрока, если его нет - записывает, если он есть - меняет его результат
-
-  async generateName() {
-    const playerName = await this.view.readName();
-    this.hero.heroName = playerName;
-    await changeBD(this.hero.heroName);
   }
 
   regenerateTrack() {
@@ -41,10 +30,16 @@ class Game {
     this.enemy.position = this.enemy.moveLeft();
     this.track[this.enemy.position] = this.enemy.skin;
   }
+  async generateName() {
+    const playerName = await this.view.readName();
+    this.hero.heroName = playerName;
+    await changeBD(this.hero.heroName);
+  }
 
-  async check() {
+  check() {
     if (this.hero.position === this.enemy.position) {
       this.hero.die();
+      this.generateName();
     }
     if (this.hero.boomerang.direction) {
       this.hero.boomerang.flyRight();
@@ -54,6 +49,7 @@ class Game {
     if (this.hero.boomerang.position >= this.enemy.position) {
       this.hero.boomerang.direction = false;
       this.enemy.die();
+      this.hero.score += 10;
       this.enemy = new Enemy();
     }
   }
@@ -69,5 +65,4 @@ class Game {
   }
 }
 const newGame = new Game().generateName();
-
 module.exports = Game;

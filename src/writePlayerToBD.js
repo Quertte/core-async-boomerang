@@ -10,7 +10,7 @@ async function writeToBD(name) {
   // }
   await Player.create({
     name: `${name}`,
-    score: 0, // this.game.score
+    score: this.game.hero.score, // this.game.score
   });
 }
 
@@ -23,10 +23,11 @@ async function changeBD(name) {
 
   if (playerThatAlreadyPlaid === null) {
     await writeToBD(name);
-  } else if (playerThatAlreadyPlaid.score < 100) {
+  } else if (playerThatAlreadyPlaid.score < this.game.hero.score) {
     // this.game.score
     // eslint-disable-next-line no-unused-expressions
-    (playerThatAlreadyPlaid.score = 100), playerThatAlreadyPlaid.save();
+    (playerThatAlreadyPlaid.score = this.game.hero.score),
+      playerThatAlreadyPlaid.save();
   }
 }
 

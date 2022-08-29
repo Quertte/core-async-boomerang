@@ -1,15 +1,11 @@
 // Наш герой.
 
 class Hero {
-
-  constructor({ position, heroName, boomerang }) {
+  constructor({ position, boomerang }) {
     this.skin = '🤠'; // можете использовать любые emoji '💃'
     this.position = position;
-    this.heroName = heroName;
-    this.score = 0;
-
-
     this.boomerang = boomerang;
+    this.score = 0;
   }
 
   moveLeft() {
@@ -30,6 +26,7 @@ class Hero {
   die() {
     this.skin = '💀';
     console.log('YOU ARE DEAD!💀');
+    console.log(`Вы набрали ${this.score} очков`);
     process.exit();
   }
 }
