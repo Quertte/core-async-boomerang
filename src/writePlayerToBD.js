@@ -1,5 +1,6 @@
 const { Player } = require('../db/models');
 const { sequelize } = require('../db/models/index');
+const { Game } = require('./Game');
 
 async function writeToBD(name) {
   // try {

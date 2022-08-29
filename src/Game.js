@@ -31,16 +31,19 @@ class Game {
     this.track[this.enemy.position] = this.enemy.skin;
   }
 
-  async generateName() {
-    const playerName = await this.view.readName();
-    this.hero.heroName = playerName;
-    await changeBD(this.hero.heroName);
-  }
+  // async generateName() {
+  //   const playerName = await this.view.readName();
+  //   this.hero.heroName = playerName;
+  //   await changeBD(this.hero.heroName);
+  // }
 
   async check() {
     if (this.hero.position === this.enemy.position) {
       this.hero.die();
-      await this.generateName();
+      // добавила во внутрь без вызова - все равно не отрабатывает.Может все таки из-за функции дэд??
+      const playerName = await this.view.readName();
+      this.hero.heroName = playerName;
+      await changeBD(this.hero.heroName);
     }
     if (this.hero.boomerang.direction) {
       this.hero.boomerang.flyRight();
