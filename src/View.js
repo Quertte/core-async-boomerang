@@ -8,7 +8,7 @@ class View {
   readName() {
     return new Promise((resolve, reject) => {
       rl.question(
-        '\n\nПривет, кто у нас тут сегодня играет??\n\n',
+        '\n\nПривет,  и кто же у нас тут сегодня играет??\n\n',
         (answer) => {
           resolve(answer);
           rl.close();
