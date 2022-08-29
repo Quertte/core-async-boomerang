@@ -13,7 +13,14 @@ function runInteractiveConsole(game) {
   const keyboard = {
     q: () => game.hero.moveLeft(),
     w: () => game.hero.moveRight(),
-    space: () => (game.hero.boomerang.direction = true),
+    space: () => {
+      if (game.hero.boomerang.inAir) {
+        return;
+      }
+      game.hero.boomerang.inAir = true;
+      game.hero.boomerang.direction = true;
+      game.hero.boomerang.position = game.hero.position + 1;
+    },
     r: () => console.log('r'),
     t: () => console.log('t'),
     y: () => console.log('y'),

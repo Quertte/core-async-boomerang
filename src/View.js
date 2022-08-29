@@ -1,23 +1,19 @@
 // Сделаем отдельный класс для отображения игры в консоли
 const readline = require('readline');
-const { stdin: input, stdout: output } = require('process');
+const { stdin: input } = require('process');
 
-const rl = readline.createInterface({ input, output });
+const rl = readline.createInterface({ input });
 
 class View {
-
   readName() {
     return new Promise((resolve, reject) => {
-      rl.question(
-        '\n\nПривет,  и кто же у нас тут сегодня играет??\n\n',
-        (answer) => {
-          resolve(answer);
-          rl.close();
-        }
-      );
+      console.log('\n\n Как зовут тебя герой??\n\n');
+      rl.question('', (answer) => {
+        resolve(answer);
+        // rl.close();
+      });
     });
   }
-
 
   // eslint-disable-next-line class-methods-use-this
 

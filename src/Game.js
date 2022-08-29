@@ -37,20 +37,41 @@ class Game {
   //   await changeBD(this.hero.heroName);
   // }
 
-  async check() {
+  gameOver() {
     if (this.hero.position === this.enemy.position) {
-      this.hero.die();
+      clearInterval(this.int);
       // добавила во внутрь без вызова - все равно не отрабатывает.Может все таки из-за функции дэд??
-      const playerName = await this.view.readName();
-      this.hero.heroName = playerName;
-      await changeBD(this.hero.heroName);
+      const nameQuery = async () => {
+        this.hero.die();
+        console.clear();
+        // await this.generateName();
+        const playerName = await this.view.readName();
+        const neName = playerName.replace(/[\*\ ]/gim, '');
+        this.hero.heroName = neName;
+        console.log(neName);
+        console.log('YOU ARE DEAD!💀');
+        console.log(`Вы набрали ${this.hero.score} очков`);
+        await changeBD(this.hero.heroName, this.hero.score);
+        process.exit();
+      };
+      nameQuery();
     }
+  }
+
+  check() {
     if (this.hero.boomerang.direction) {
       this.hero.boomerang.flyRight();
     } else {
       this.hero.boomerang.flyLeft();
     }
-    if (this.hero.boomerang.position >= this.enemy.position) {
+    if (this.hero.boomerang.position <= this.hero.position) {
+      this.hero.boomerang.inAir = false;
+      this.hero.boomerang.position = Infinity;
+    }
+    if (
+      this.hero.boomerang.inAir &&
+      this.hero.boomerang.position >= this.enemy.position
+    ) {
       this.hero.boomerang.direction = false;
       this.enemy.die();
       this.hero.score += 10;
@@ -59,13 +80,15 @@ class Game {
   }
 
   play() {
-    runInteractiveConsole(this);
-    setInterval(() => {
+    this.int = setInterval(() => {
       // Let's play!
       this.check();
       this.regenerateTrack();
       this.view.render(this.track);
+      this.gameOver();
     }, 45);
+    runInteractiveConsole(this);
+    console.clear();
   }
 }
 // const newGame = new Game().generateName();

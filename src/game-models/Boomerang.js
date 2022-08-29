@@ -7,11 +7,13 @@ class Boomerang {
     this.skin = '🌀';
     this.position = 1;
     this.direction = null;
+    this.inAir = false;
   }
 
   flyRight() {
     this.moveRight();
   }
+
   flyLeft() {
     this.moveLeft();
   }

@@ -2,7 +2,7 @@ const { Player } = require('../db/models');
 const { sequelize } = require('../db/models/index');
 const { Game } = require('./Game');
 
-async function writeToBD(name) {
+async function writeToBD(name, score) {
   // try {
   //   await sequelize.authenticate();
   //   console.log('соединение установлено');
@@ -10,25 +10,25 @@ async function writeToBD(name) {
   //   console.log('не удалось');
   // }
   await Player.create({
-    name: `${name}`,
-    score: this.game.hero.score, // this.game.score
+    name,
+    score, // this.game.score
   });
 }
 
-async function changeBD(name) {
+async function changeBD(name, score) {
   const playerThatAlreadyPlaid = await Player.findOne({
     where: {
-      name: `${name}`,
+      name,
     },
   });
 
   if (playerThatAlreadyPlaid === null) {
-    await writeToBD(name);
-  } else if (playerThatAlreadyPlaid.score < this.game.hero.score) {
+    await writeToBD(name, score);
+  } else if (playerThatAlreadyPlaid.score < score) {
     // this.game.score
     // eslint-disable-next-line no-unused-expressions
-    (playerThatAlreadyPlaid.score = this.game.hero.score),
-      playerThatAlreadyPlaid.save();
+    playerThatAlreadyPlaid.score = score;
+    await playerThatAlreadyPlaid.save();
   }
 }
 
