@@ -30,16 +30,17 @@ class Game {
     this.enemy.position = this.enemy.moveLeft();
     this.track[this.enemy.position] = this.enemy.skin;
   }
+
   async generateName() {
     const playerName = await this.view.readName();
     this.hero.heroName = playerName;
     await changeBD(this.hero.heroName);
   }
 
-  check() {
+  async check() {
     if (this.hero.position === this.enemy.position) {
       this.hero.die();
-      this.generateName();
+      await this.generateName();
     }
     if (this.hero.boomerang.direction) {
       this.hero.boomerang.flyRight();
