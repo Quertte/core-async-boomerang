@@ -64,5 +64,5 @@ class Game {
     }, 45);
   }
 }
-const newGame = new Game().generateName();
+// const newGame = new Game().generateName();
 module.exports = Game;
