@@ -5,6 +5,7 @@ const { stdin: input, stdout: output } = require('process');
 const rl = readline.createInterface({ input, output });
 
 class View {
+
   readName() {
     return new Promise((resolve, reject) => {
       rl.question(
@@ -16,6 +17,9 @@ class View {
       );
     });
   }
+
+
+  // eslint-disable-next-line class-methods-use-this
 
   render(track) {
     const yourTeamName = 'Elbrus';
